@@ -1,6 +1,7 @@
 package com.daniel.common;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -53,5 +54,18 @@ public class CrawlerUtil {
                 jsonData.getString("province"),
                 jsonData.getString("city"),
                 jsonData.getString("area"));
+    }
+
+
+    public static String parseData(String topCategory, String subCategory, JSONArray results) {
+        StringBuilder data = new StringBuilder();
+        for (int i = 0; i < results.size(); i++) {
+            JSONObject result = results.getJSONObject(i);
+            data.append(parseData(topCategory, subCategory, result));
+            if (i != results.size() - 1) {
+                data.append("\r\n");
+            }
+        }
+        return data.toString();
     }
 }

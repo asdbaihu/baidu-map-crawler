@@ -1,5 +1,7 @@
 package com.daniel.crawler;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.daniel.common.CrawlerConstant;
 import com.daniel.common.CrawlerUtil;
@@ -12,6 +14,7 @@ import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * 百度地图POI数据爬虫
@@ -23,11 +26,19 @@ public class BaiduPoiProcessor implements PageProcessor {
 
     private Logger logger = LoggerFactory.getLogger(BaiduPoiProcessor.class);
 
+    private LinkedBlockingDeque linkedBlockingDeque;
+
     /**
      * 部分一：抓取网站的相关配置，包括编码、抓取间隔、重试次数等
      */
-    private Site site = Site.me().setRetryTimes(3).setSleepTime(1000).setCharset("UTF-8");
+    private Site site = Site.me().setRetryTimes(3).setSleepTime(500).setCharset("UTF-8");
 
+    public BaiduPoiProcessor() {
+    }
+
+    public BaiduPoiProcessor(LinkedBlockingDeque linkedBlockingDeque) {
+        this.linkedBlockingDeque = linkedBlockingDeque;
+    }
 
     /**
      * process是定制爬虫逻辑的核心接口，在这里编写抽取逻辑
@@ -50,8 +61,12 @@ public class BaiduPoiProcessor implements PageProcessor {
             logger.error("reason:{}", pageData.getString("message"));
             return;
         }
-        // 定义如何抽取页面信息，并保存下来
-        page.putField(CrawlerConstant.RESULTS, pageData.getString(CrawlerConstant.RESULTS));
+        // 抽取数据，并保存下来
+        JSONArray results = JSON.parseArray(pageData.getString(CrawlerConstant.RESULTS));
+        String topCategory = CrawlerUtil.getUrlParam(page.getUrl().toString(), "tag");
+        String subCategory = CrawlerUtil.getUrlParam(page.getUrl().toString(), "query");
+        //page.putField(CrawlerConstant.RESULTS, CrawlerUtil.parseData(topCategory, subCategory, results));
+        linkedBlockingDeque.add(CrawlerUtil.parseData(topCategory, subCategory, results));
 
         // 总记录数，如果总记录数大于20条，则进行分页
         int total = Integer.valueOf(pageData.getString(CrawlerConstant.TOTAL));
