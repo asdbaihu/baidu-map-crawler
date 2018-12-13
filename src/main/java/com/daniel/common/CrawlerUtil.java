@@ -122,10 +122,7 @@ public class CrawlerUtil {
         StringBuilder data = new StringBuilder();
         for (int i = 0; i < results.size(); i++) {
             JSONObject result = results.getJSONObject(i);
-            data.append(parseData(topCategory, subCategory, result));
-            if (i != results.size() - 1) {
-                data.append("\r\n");
-            }
+            data.append(parseData(topCategory, subCategory, result)).append("\r\n");
         }
         return data.toString();
     }
