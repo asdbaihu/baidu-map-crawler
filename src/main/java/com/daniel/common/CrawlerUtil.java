@@ -4,6 +4,13 @@ package com.daniel.common;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * 爬虫辅助工具类
  *
@@ -11,6 +18,60 @@ import com.alibaba.fastjson.JSONObject;
  * @date 2018/12/11 10:50
  */
 public class CrawlerUtil {
+
+    /**
+     * 根据抓取地区构建URL
+     *
+     * @param regions 目标抓取地
+     * @return 存放抓取地区首页URL的List
+     */
+    public static List<String> loadUrl(String[] regions, String coordType) {
+        List<String> urls = new LinkedList<>();
+        File file = new File(CrawlerConstant.TAG_PATH);
+        try (FileReader fileReader = new FileReader(file);
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+            String line;
+            // 逐行读取
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] categories = line.split(CrawlerConstant.TAG_TOP_SPLIT);
+                if (categories.length > 1) {
+                    String[] tags = categories[1].split(CrawlerConstant.TAG_SUB_SPLIT);
+                    // 通过标签以及抓取区域构建URL
+                    for (String region : regions) {
+                        for (String tag : tags) {
+                            urls.add(String.format(CrawlerConstant.BAIDU_MAP_API,
+                                    // 检索关键词，一级分类，抓取地区，坐标类型，用户AK
+                                    tag, categories[0], region, coordType, CrawlerConstant.BAIDU_MAP_API_AK));
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return urls;
+    }
+
+
+    /**
+     * 创建文件
+     *
+     * @param path 路径路径
+     * @return 创建的文件
+     */
+    public static File createFile(String path) {
+        File output = new File(path);
+        // 如果文件不存在，则先创建新文件
+        try {
+            if (!output.exists()) {
+                output.createNewFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return output;
+    }
+
 
     /**
      * 计算分页页数

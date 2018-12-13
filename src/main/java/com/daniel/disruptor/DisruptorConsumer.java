@@ -2,17 +2,20 @@ package com.daniel.disruptor;
 
 import com.lmax.disruptor.WorkHandler;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * Disruptor消费者：负责将Disruptor中的数据写入到文件之中
+ *
  * @author lingengxiang
  * @date 2018/12/13 11:41
  */
 public class DisruptorConsumer implements WorkHandler<FileData> {
-    private static final String FINIDHED = "EOF";
+
+    /**
+     * 文件读取完毕标记
+     */
+    private static final String FINISHED = "EOF";
 
     private PrintWriter printWriter;
 
@@ -23,14 +26,15 @@ public class DisruptorConsumer implements WorkHandler<FileData> {
         this.printWriter = printWriter;
     }
 
+
     @Override
-    public void onEvent(FileData event) throws Exception {
+    public void onEvent(FileData event) {
         String line = event.getLine();
-        if (line.equals(FINIDHED)) {
+        if (line.equals(FINISHED)) {
             return;
         }
         printWriter.print(line);
-
     }
+
 }
 

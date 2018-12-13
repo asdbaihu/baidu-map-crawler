@@ -9,11 +9,12 @@ import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 
-import java.io.*;
-import java.util.concurrent.BlockingDeque;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * @author lingengxiang
@@ -24,32 +25,6 @@ public class TestDisruptorTime {
     public static void main(String[] args) {
 
         long start = System.currentTimeMillis();
-
-//        File file = new File("D:\\test.txt");
-//        BlockingDeque deque = new LinkedBlockingDeque();
-//        StringBuilder sb = new StringBuilder();
-//        try (FileReader fileReader = new FileReader(file);
-//             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-//            int index = 0;
-//
-//            while (true) {
-//                // 一次读一行
-//                String line = bufferedReader.readLine();
-//                if (null == line) {
-//                    break;
-//                }
-//                if (index++ < 20) {
-//                    sb.append(line).append("\r\n");
-//                }else {
-//                    deque.add(sb.toString());
-//                    sb.delete(0, sb.length());
-//                    index = 0;
-//                }
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        deque.add(sb);
 
         // 工厂
         DisruptorFactory factory = new DisruptorFactory();

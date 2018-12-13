@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.daniel.common.CrawlerConstant;
 import com.daniel.common.CrawlerUtil;
+import com.daniel.disruptor.DisruptorProducer;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,20 +25,28 @@ import java.util.concurrent.LinkedBlockingDeque;
  */
 public class BaiduPoiProcessor implements PageProcessor {
 
+    /**
+     * 日志
+     */
     private Logger logger = LoggerFactory.getLogger(BaiduPoiProcessor.class);
 
-    private LinkedBlockingDeque linkedBlockingDeque;
+    /**
+     * Disruptor生产者
+     */
+    private DisruptorProducer producer;
 
     /**
      * 部分一：抓取网站的相关配置，包括编码、抓取间隔、重试次数等
      */
     private Site site = Site.me().setRetryTimes(3).setSleepTime(500).setCharset("UTF-8");
 
+
     public BaiduPoiProcessor() {
     }
 
-    public BaiduPoiProcessor(LinkedBlockingDeque linkedBlockingDeque) {
-        this.linkedBlockingDeque = linkedBlockingDeque;
+
+    public BaiduPoiProcessor(DisruptorProducer producer) {
+        this.producer = producer;
     }
 
     /**
@@ -65,8 +74,8 @@ public class BaiduPoiProcessor implements PageProcessor {
         JSONArray results = JSON.parseArray(pageData.getString(CrawlerConstant.RESULTS));
         String topCategory = CrawlerUtil.getUrlParam(page.getUrl().toString(), "tag");
         String subCategory = CrawlerUtil.getUrlParam(page.getUrl().toString(), "query");
-        //page.putField(CrawlerConstant.RESULTS, CrawlerUtil.parseData(topCategory, subCategory, results));
-        linkedBlockingDeque.add(CrawlerUtil.parseData(topCategory, subCategory, results));
+        // 生产者将数据放入Disruptor中
+        producer.pushData(CrawlerUtil.parseData(topCategory, subCategory, results));
 
         // 总记录数，如果总记录数大于20条，则进行分页
         int total = Integer.valueOf(pageData.getString(CrawlerConstant.TOTAL));
