@@ -68,7 +68,7 @@ public class BaiduPoiPipeline implements Pipeline {
         // 写入数据
         try (FileWriter fileWriter = new FileWriter(file, true);
              PrintWriter printWriter = new PrintWriter(fileWriter)) {
-            printWriter.println(resultItems.get(CrawlerConstant.RESULTS) + "");
+            printWriter.print(resultItems.get(CrawlerConstant.RESULTS) + "");
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }

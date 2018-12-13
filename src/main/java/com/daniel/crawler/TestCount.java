@@ -13,7 +13,7 @@ import java.io.IOException;
 public class TestCount {
 
     public static void main(String[] args) {
-        File file = new File("D:\\深圳市.txt");
+        File file = new File("D:\\test.txt");
         long count = 0L;
         try (FileReader fileReader = new FileReader(file);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {

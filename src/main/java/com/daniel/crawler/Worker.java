@@ -20,9 +20,9 @@ public class Worker {
 
         // 读取到的抓取区域
 //        String[] regions = {"深圳市福田区", "深圳市罗湖区", "深圳市南山区", "深圳市盐田区", "深圳市宝安区", "深圳市龙岗区", "深圳市龙华区", "深圳市坪山区", "深圳市光明区"};
-        String[] regions = {"深圳市"};
+        String[] regions = {"深圳市福田区"};
         // 读取到的保存路径
-        String path = "D:\\深圳市-3.txt";
+        String path = "D:\\深圳市-4.txt";
 
         // 用于存储所有构建的所有tag的URL
         List<String> urls = new LinkedList<>();
@@ -71,7 +71,7 @@ public class Worker {
             try (FileWriter fileWriter = new FileWriter(storageFile, true);
                  PrintWriter printWriter = new PrintWriter(fileWriter)) {
                 for (Object data : deque) {
-                    printWriter.println(data);
+                    printWriter.print(data);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
