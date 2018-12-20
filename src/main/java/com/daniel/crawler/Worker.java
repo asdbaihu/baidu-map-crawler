@@ -78,15 +78,14 @@ public class Worker {
         }
     }
 
-
     public static void main(String[] args) {
 
         // 读取到的抓取区域
 //        String[] regions = {"深圳市罗湖区", "深圳市南山区", "深圳市盐田区", "深圳市宝安区", "深圳市龙岗区", "深圳市龙华区", "深圳市坪山区", "深圳市光明区"};
-        String[] regions = {"深圳市"};
+        String[] regions = {"广东省中山市中山"};
         // 读取到的保存路径
-        String path = "D:\\深圳市-2.txt";
-        Worker.crawl(new CrawlerRequest(regions, path, "3"));
+        String path = "D:\\广东省中山市中山.txt";
+        Worker.crawl(new CrawlerRequest(regions, path, "3", CrawlerConstant.BAIDU_MAP_API_AK));
     }
 
 }

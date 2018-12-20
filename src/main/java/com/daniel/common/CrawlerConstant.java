@@ -29,7 +29,7 @@ public class CrawlerConstant {
     /**
      * 百度地图API的访问token
      */
-    public static final String BAIDU_MAP_API_AK = "";
+    public static final String BAIDU_MAP_API_AK = "uEt8NGHhXK2pq9kcTSWd6tTAnwafZlS8";
 
     /**
      * 每页数据条数
@@ -50,6 +50,11 @@ public class CrawlerConstant {
      * 存放TAG数据的路径
      */
     public static final String TAG_PATH = "src/main/resources/tag.txt";
+
+    /**
+     * 存放AREA数据的路径
+     */
+    public static final String AREA_PATH = "src/main/resources/area.txt";
 
     /**
      * TAG数据一级分类的分词

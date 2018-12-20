@@ -15,7 +15,6 @@ import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * 百度地图POI数据爬虫
@@ -40,10 +39,8 @@ public class BaiduPoiProcessor implements PageProcessor {
      */
     private Site site = Site.me().setRetryTimes(3).setSleepTime(500).setCharset("UTF-8");
 
-
     public BaiduPoiProcessor() {
     }
-
 
     public BaiduPoiProcessor(DisruptorProducer producer) {
         this.producer = producer;
@@ -92,7 +89,6 @@ public class BaiduPoiProcessor implements PageProcessor {
             page.addTargetRequests(restPage);
         }
     }
-
 
     @Override
     public Site getSite() {

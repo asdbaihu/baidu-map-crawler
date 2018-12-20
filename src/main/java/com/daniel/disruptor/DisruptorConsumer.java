@@ -26,7 +26,6 @@ public class DisruptorConsumer implements WorkHandler<FileData> {
         this.printWriter = printWriter;
     }
 
-
     @Override
     public void onEvent(FileData event) {
         String line = event.getLine();

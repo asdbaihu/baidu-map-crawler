@@ -23,13 +23,19 @@ public class CrawlerRequest {
      */
     private String coordType;
 
+    /**
+     * 验证AK
+     */
+    private String accessKey;
+
     public CrawlerRequest() {
     }
 
-    public CrawlerRequest(String[] regions, String path, String coordType) {
+    public CrawlerRequest(String[] regions, String path, String coordType, String accessKey) {
         this.regions = regions;
         this.path = path;
         this.coordType = coordType;
+        this.accessKey = accessKey;
     }
 
     public String[] getRegions() {
@@ -56,4 +62,11 @@ public class CrawlerRequest {
         this.coordType = coordType;
     }
 
+    public String getAccessKey() {
+        return accessKey;
+    }
+
+    public void setAccessKey(String accessKey) {
+        this.accessKey = accessKey;
+    }
 }

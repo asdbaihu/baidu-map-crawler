@@ -24,11 +24,9 @@ public class DisruptorProducer {
      */
     private final RingBuffer<FileData> ringBuffer;
 
-
     public DisruptorProducer(RingBuffer<FileData> ringBuffer) {
         this.ringBuffer = ringBuffer;
     }
-
 
     /**
      * 存放数据有
@@ -49,7 +47,6 @@ public class DisruptorProducer {
             ringBuffer.publish(seq);
         }
     }
-
 
     /**
      * 读取文件测试
