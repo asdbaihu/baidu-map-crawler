@@ -29,7 +29,7 @@ public class CrawlerConstant {
     /**
      * 百度地图API的访问token
      */
-    public static final String BAIDU_MAP_API_AK = "uEt8NGHhXK2pq9kcTSWd6tTAnwafZlS8";
+    public static final String BAIDU_MAP_API_AK = "";
 
     /**
      * 每页数据条数
